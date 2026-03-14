@@ -22,16 +22,22 @@ export default {
     })
     
     function insertCommentSection() {
-      // 如果已存在，不重复插入
-      if (document.getElementById('extalk-wrapper')) return
+      // 清除旧的评论区（切换页面时需要刷新）
+      const oldWrapper = document.getElementById('extalk-wrapper')
+      if (oldWrapper) {
+        oldWrapper.remove()
+      }
       
-      // 创建评论区
+      // 重置 SDK 的加载状态（让 SDK 重新初始化）
+      window.__extalk_comments_init = false
+      
+      // 创建新的评论区
       const wrapper = document.createElement('div')
       wrapper.id = 'extalk-wrapper'
-      wrapper.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); max-width: var(--vp-layout-max-width); margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;'
+      wrapper.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 24px; padding-right: 24px;'
       wrapper.innerHTML = `
         <h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--vp-c-text-1); text-align: center;">💬 评论</h2>
-        <div id="extalk-comments" style="max-width: 800px; margin: 20px auto 0;"></div>
+        <div id="extalk-comments" style="width: 100%; max-width: 100%; margin: 20px 0 0;"></div>
       `
       
       // 插入到 footer 前面
@@ -40,13 +46,15 @@ export default {
         footer.parentNode.insertBefore(wrapper, footer)
       }
       
-      // 加载 SDK（如果还没加载）
-      if (!document.querySelector('script[src="https://comment.upxuu.com/sdk.js"]')) {
-        const script = document.createElement('script')
-        script.src = 'https://comment.upxuu.com/sdk.js'
-        script.async = true
-        document.body.appendChild(script)
+      // 重新加载 SDK（每次切换页面都重新加载，确保 URL 正确）
+      const oldScript = document.querySelector('script[src="https://comment.upxuu.com/sdk.js"]')
+      if (oldScript) {
+        oldScript.remove()
       }
+      const script = document.createElement('script')
+      script.src = 'https://comment.upxuu.com/sdk.js'
+      script.async = true
+      document.body.appendChild(script)
     }
   }
 }
