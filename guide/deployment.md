@@ -37,12 +37,27 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
 [vars]
+# hCaptcha 密钥（https://www.hcaptcha.com）
 HCAPTCHA_SECRET_KEY = "你的 hCaptcha 密钥"
+HCAPTCHA_SITE_KEY = "你的 hCaptcha Site Key"
+
+# Resend 邮件 API（https://resend.com）
 RESEND_API_KEY = "你的 Resend API 密钥"
+
+# JWT 密钥（随机生成的密钥）
 JWT_SECRET = "随机生成的密钥"
+
+# 管理员账户
 ADMIN_EMAIL = "管理员邮箱"
 ADMIN_PASS = "管理员密码"
+
+# 管理员后台 URL 路径（可自定义）
+ADMIN_URL = "/upxuuadmin"
+
+# 基础 URL（部署后自动获取）
 BASE_URL = "https://your-worker.workers.dev"
+
+# 加载模式：pagination | infinite | loadmore
 LOAD_MODE = "pagination"
 
 [[d1_databases]]
@@ -95,13 +110,15 @@ https://your-worker.workers.dev/init-admin-999
 
 ## 步骤 9: 访问管理后台
 
-访问：
+访问配置的管理员 URL（默认 `/upxuuadmin`）：
 
 ```
 https://your-worker.workers.dev/upxuuadmin
 ```
 
 使用配置的管理员账号登录。
+
+> 💡 **提示**: 你可以在 `ADMIN_URL` 环境变量中自定义管理员后台路径。
 
 ## 步骤 10: 前端集成
 
@@ -118,8 +135,10 @@ https://your-worker.workers.dev/upxuuadmin
 
 1. 访问 https://www.hcaptcha.com/
 2. 注册账号并创建站点
-3. 获取 Site Key 和 Secret Key
-4. 填入 `wrangler.toml`
+3. 获取 **Site Key** 和 **Secret Key**
+4. 填入 `wrangler.toml`：
+   - `HCAPTCHA_SITE_KEY` = 你的 Site Key
+   - `HCAPTCHA_SECRET_KEY` = 你的 Secret Key
 
 ### Resend（邮件服务）
 
