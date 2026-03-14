@@ -19,8 +19,8 @@ const loadComments = async () => {
   // 创建评论区容器
   const commentsDiv = document.createElement('div')
   commentsDiv.id = 'extalk-comments'
-  commentsDiv.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); width: 100%; max-width: 100%; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;'
-  commentsDiv.innerHTML = '<h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--vp-c-text-1); text-align: center;">💬 评论</h2><div id="extalk-comments-inner" style="margin-top: 20px; max-width: 1152px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;"></div>'
+  commentsDiv.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); width: 100%; max-width: var(--vp-layout-max-width); margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;'
+  commentsDiv.innerHTML = '<h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--vp-c-text-1); text-align: center;">💬 评论</h2><div id="extalk-comments-inner" style="margin-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto;"></div>'
   
   // 找到 footer 并插入到它前面
   const footer = document.querySelector('.VPFooter')
