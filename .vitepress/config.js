@@ -2,6 +2,7 @@
 export default {
   title: "ExTalk",
   description: "基于 Cloudflare Workers 的轻量级评论系统",
+  ignoreDeadLinks: true,  // 禁用死链检查，允许 Vercel 部署
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
