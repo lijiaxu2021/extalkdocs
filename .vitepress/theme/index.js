@@ -40,10 +40,15 @@ export default {
         <div id="extalk-comments" style="width: 100%; max-width: 100%; margin: 20px 0 0;"></div>
       `
       
-      // 插入到 footer 前面
-      const footer = document.querySelector('.VPFooter')
-      if (footer) {
-        footer.parentNode.insertBefore(wrapper, footer)
+      // 优先插入到 .vp-doc 容器内底部，如果没有则插入到 footer 前
+      const vpDoc = document.querySelector('.vp-doc')
+      if (vpDoc) {
+        vpDoc.appendChild(wrapper)
+      } else {
+        const footer = document.querySelector('.VPFooter')
+        if (footer) {
+          footer.parentNode.insertBefore(wrapper, footer)
+        }
       }
       
       // 重新加载 SDK（每次切换页面都重新加载，确保 URL 正确）

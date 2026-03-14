@@ -31,6 +31,7 @@ export default {
       {
         text: '前端集成',
         items: [
+          { text: '集成指南', link: '/guide/integration' },
           { text: 'SDK 使用', link: '/guide/sdk' },
           { text: '加载模式', link: '/guide/load-modes' },
           { text: '样式定制', link: '/guide/customization' }
