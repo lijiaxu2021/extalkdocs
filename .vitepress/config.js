@@ -62,41 +62,6 @@ export default {
     footer: {
       message: '基于 CC BY-NC-SA 4.0 许可发布',
       copyright: 'Copyright © 2026 ExTalk'
-    },
-
-    // 自定义 HTML 插入到页面底部
-    head: [
-      ['script', {}, `
-        window.addEventListener('load', () => {
-          // 延迟执行确保页面完全渲染
-          setTimeout(() => {
-            // 创建评论区
-            const commentsDiv = document.createElement('div');
-            commentsDiv.id = 'extalk-comments';
-            commentsDiv.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); max-width: 1152px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;';
-            commentsDiv.innerHTML = '<h2 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--vp-c-text-1);">💬 评论</h2><div id="extalk-comments-inner" style="margin-top: 20px;"></div>';
-            
-            // 添加到 VPContent 底部，footer 之前
-            const vpContent = document.getElementById('VPContent');
-            if (vpContent) {
-              const footer = vpContent.querySelector('.VPFooter');
-              if (footer) {
-                footer.parentNode.insertBefore(commentsDiv, footer);
-              } else {
-                // 如果没有 footer，放到最后
-                const vpDoc = vpContent.querySelector('.vp-doc') || vpContent;
-                vpDoc.appendChild(commentsDiv);
-              }
-              
-              // 加载 SDK
-              const script = document.createElement('script');
-              script.src = 'https://comment.upxuu.com/sdk.js';
-              script.async = true;
-              document.body.appendChild(script);
-            }
-          }, 500);
-        });
-      `]
-    ]
+    }
   }
 }
