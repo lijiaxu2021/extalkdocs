@@ -1,36 +1,39 @@
 import DefaultTheme from 'vitepress/theme'
-import { h, onMounted } from 'vue'
 
 export default {
   extends: DefaultTheme,
-  setup() {
-    onMounted(() => {
-      // 加载 ExTalk SDK
-      const script = document.createElement('script')
-      script.src = 'https://comment.upxuu.com/sdk.js'
-      script.async = true
-      document.body.appendChild(script)
-    })
-  },
-  Layout() {
-    return h(DefaultTheme.Layout, null, {
-      // 在内容底部插入评论区
-      'doc-after': () => h('div', {
-        style: {
-          marginTop: '60px',
-          paddingTop: '40px',
-          borderTop: '1px solid var(--vp-c-divider)'
+  enhanceApp({ app, router, siteData }) {
+    // 监听路由变化，在每个页面加载后添加评论区
+    if (typeof window !== 'undefined') {
+      const addComments = () => {
+        // 检查是否已经添加过
+        if (document.getElementById('extalk-comments')) return
+        
+        // 创建评论区容器
+        const commentsDiv = document.createElement('div')
+        commentsDiv.id = 'extalk-comments'
+        commentsDiv.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider);'
+        
+        // 添加到页面底部
+        const vpDoc = document.querySelector('.vp-doc')
+        if (vpDoc) {
+          vpDoc.appendChild(commentsDiv)
+          
+          // 加载 SDK
+          const script = document.createElement('script')
+          script.src = 'https://comment.upxuu.com/sdk.js'
+          script.async = true
+          document.body.appendChild(script)
         }
-      }, [
-        h('h2', {
-          style: {
-            fontSize: '1.5rem',
-            marginBottom: '20px',
-            color: 'var(--vp-c-text-1)'
-          }
-        }, '💬 评论'),
-        h('div', { id: 'extalk-comments', style: { marginTop: '20px' } })
-      ])
-    })
+      }
+      
+      // 初始加载
+      setTimeout(addComments, 100)
+      
+      // 路由变化后重新加载
+      router.onAfterRouteChanged = (to) => {
+        setTimeout(addComments, 100)
+      }
+    }
   }
 }

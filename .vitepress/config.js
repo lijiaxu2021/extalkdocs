@@ -62,6 +62,35 @@ export default {
     footer: {
       message: '基于 CC BY-NC-SA 4.0 许可发布',
       copyright: 'Copyright © 2026 ExTalk'
-    }
+    },
+
+    // 自定义 HTML 插入到页面底部
+    head: [
+      ['script', {}, `
+        window.addEventListener('DOMContentLoaded', () => {
+          // 创建评论区
+          const commentsDiv = document.createElement('div');
+          commentsDiv.id = 'extalk-comments';
+          commentsDiv.style.cssText = 'margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--vp-c-divider); max-width: 1152px; margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px;';
+          
+          // 添加到 VPContent 底部
+          const vpContent = document.getElementById('VPContent');
+          if (vpContent) {
+            const footer = vpContent.querySelector('.VPFooter');
+            if (footer) {
+              footer.before(commentsDiv);
+            } else {
+              vpContent.appendChild(commentsDiv);
+            }
+            
+            // 加载 SDK
+            const script = document.createElement('script');
+            script.src = 'https://comment.upxuu.com/sdk.js';
+            script.async = true;
+            document.body.appendChild(script);
+          }
+        });
+      `]
+    ]
   }
 }
