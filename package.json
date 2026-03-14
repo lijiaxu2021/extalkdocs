@@ -1,0 +1,17 @@
+{
+  "name": "extalk-docs",
+  "version": "1.0.0",
+  "description": "ExTalk 评论系统文档",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "keywords": ["extalk", "comments", "docs", "cloudflare-workers"],
+  "author": "",
+  "license": "CC-BY-NC-SA-4.0",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
