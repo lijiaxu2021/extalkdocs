@@ -10,11 +10,13 @@ const { Layout } = DefaultTheme
 const loadComments = async () => {
   // 检查是否已经加载过（只在客户端）
   if (typeof window === 'undefined') return
-  if (window.__extalk_loaded) return
   
   // 等待 DOM 渲染
   await nextTick()
   await new Promise(resolve => setTimeout(resolve, 300))
+  
+  // 如果评论区已存在，直接返回
+  if (document.getElementById('extalk-comments')) return
   
   // 创建评论区容器
   const commentsDiv = document.createElement('div')
@@ -28,13 +30,14 @@ const loadComments = async () => {
     footer.parentNode.insertBefore(commentsDiv, footer)
   }
   
-  // 加载 SDK
-  const script = document.createElement('script')
-  script.src = 'https://comment.upxuu.com/sdk.js'
-  script.async = true
-  document.body.appendChild(script)
-  
-  window.__extalk_loaded = true
+  // 如果 SDK 还没加载，加载 SDK
+  if (!window.__extalk_sdk_loaded) {
+    const script = document.createElement('script')
+    script.src = 'https://comment.upxuu.com/sdk.js'
+    script.async = true
+    document.body.appendChild(script)
+    window.__extalk_sdk_loaded = true
+  }
 }
 
 // 在组件挂载后执行
